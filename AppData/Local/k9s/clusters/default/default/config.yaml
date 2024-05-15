@@ -1,0 +1,18 @@
+k9s:
+  cluster: default
+  namespace:
+    active: all
+    lockFavorites: false
+    favorites:
+    - all
+    - default
+    - authentik
+    - devops
+    # - logging
+    - media
+    - nextcloud
+  view:
+    active: pod
+  featureGates:
+    nodeShell: true
+  portForwardAddress: localhost
