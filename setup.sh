@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt install curl git zsh fzf wezterm ... -y
+sudo apt install curl git zsh fzf wezterm -y
 
 # Install starship
 curl -sS https://starship.rs/install.sh | sh -s -- -f
