@@ -1,9 +1,13 @@
 
+# Huge inspiration from: https://www.youtube.com/watch?v=ud7YxC33Z3w
+
 ## Path
-# export PATH=$PATH:"~/.local/bin/"
 export PATH=$PATH:"/home/$USER/.local/bin/"
-# path+=()
-# export PATH
+
+
+## Env Vars
+export EDITOR="nvim"
+
 
 ## Zinit
 # Set the directory we want to store zinit and plugins
