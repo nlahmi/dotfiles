@@ -19,4 +19,7 @@ sudo chsh $USER -s /bin/zsh
 # Install chezmoi and Pull configurations
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin init --apply nlahmi
 
+# Symlinks for stuff that use different config paths for different OSes
+ln -s ~/AppData/Local/k9s ~/.config/
+
 # TODO: Add nvim dependencies (or run its own setup script)
