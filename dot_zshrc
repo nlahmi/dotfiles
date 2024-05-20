@@ -69,6 +69,10 @@ bindkey -e
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
+# Ctrl + Arrows skip words
+bindkey ";5C" forward-word
+bindkey ";5D" backward-word
+
 
 ## Aliases
 alias ls='ls --color'
