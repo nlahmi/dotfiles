@@ -26,4 +26,5 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin init --apply nlahmi
 # Symlinks for stuff that use different config paths for different OSes
 ln -s ~/AppData/Local/k9s ~/.config/
 
-# TODO: Add nvim dependencies (or run its own setup script)
+# Install Neovim
+sh -c "$(curl -fsLS https://raw.githubusercontent.com/nlahmi/nvim-config/main/setup-debian.sh)"
