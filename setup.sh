@@ -17,7 +17,10 @@ sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged
 curl -sS https://webi.sh/k9s | sh
 
 sudo apt update
-sudo apt install curl git zsh wezterm helm kubectl -y
+
+for i in git zsh wezterm helm kubectl; do
+  sudo apt-get install $i -y
+done
 
 # Install starship
 curl -sS https://starship.rs/install.sh | sh -s -- -f
