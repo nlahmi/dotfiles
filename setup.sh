@@ -18,7 +18,7 @@ curl -sS https://webi.sh/k9s | sh
 
 sudo apt update
 
-for i in git zsh wezterm helm kubectl; do
+for i in git zsh wezterm helm kubectl exa; do
   sudo apt-get install $i -y
 done
 
