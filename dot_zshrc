@@ -52,13 +52,6 @@ zinit snippet OMZP::ssh
 zinit snippet OMZP::sudo
 # zinit snippet OMZP::vi-mode
 
-# Kill Completions
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-# Completion case-insensitive
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
@@ -88,7 +81,7 @@ bindkey ";5D" backward-word
 
 ## Aliases
 # alias ls='ls --color'
-alias ls='exa --git --group -a'
+alias ls='eza --git --group -a'
 alias ll='ls -la'
 alias vim='nvim'
 alias c='clear'
@@ -96,13 +89,36 @@ alias c='clear'
 
 ## Shell integrations
 # FZF
+# export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 zinit light Aloxaf/fzf-tab
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(fzf --zsh)"
 
+# Kill Completions
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# Completion case-insensitive
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Completion Colors(?)
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath -a'
+
+# Don't show previews for:
+# zstyle ':completion:*' menu no
+# zstyle ':fzf-tab:complete:git:*' menu no
+# zstyle ':fzf-tab:complete:docker:*' menu no
+# zstyle ':fzf-tab:complete:kubectl:*' menu no
+
+# Show previews for all files and directories on all commands
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'zsh -c "if [ -e $realpath -a -d $realpath ]; then ls --color $realpath -a; fi; if [ -e $realpath -a -f $realpath ]; then bat --color=always --style=header,grid --line-range :300 $realpath; fi"'
+
+
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath -a'
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'zsh -c "if [ -d $realpath ]; then ls --color $realpath -a; fi; if [ -f $realpath ]; then bat --color=always --style=header,grid --line-range :300 $realpath; fi"'
+# zstyle ':fzf-tab:complete:cat:*' fzf-preview 'zsh -c "if [ -d $realpath ]; then ls --color $realpath -a; fi; if [ -f $realpath ]; then bat --color=always --style=header,grid --line-range :300 $realpath; fi"'
+# zstyle ':fzf-tab:complete:ls:*' fzf-preview 'ls --color $realpath -a'
+# zstyle ':fzf-tab:complete:cat:*' fzf-preview 'bat --color=always --style=header,grid --line-range :300 $realpath'
 # zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath -a'
 
 # Zoxide
