@@ -32,7 +32,7 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
 # Add in snippets
-zinit snippet OMZP::adb
+# zinit snippet OMZP::_adb     # Can't download
 zinit snippet OMZP::aliases
 zinit snippet OMZP::ansible
 # zinit snippet OMZP::asdf
@@ -41,12 +41,12 @@ zinit snippet OMZP::ansible
 zinit snippet OMZP::colorize
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::cp
-zinit snippet OMZP::docker
-# zinit snippet OMZP::fzf  # Use this instead of my manual config, if problems with autocompletion arise
+# zinit snippet OMZP::docker     # Throws an error
+# zinit snippet OMZP::fzf      # Use this instead of my manual config, if problems with autocompletion arise
 zinit snippet OMZP::git
-zinit snippet OMZP::helm
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
+# zinit snippet OMZP::helm     # Throws an error
+# zinit snippet OMZP::kubectl  # Completions don't work
+# zinit snippet OMZP::kubectx  # Not sure I need it
 zinit snippet OMZP::pip
 zinit snippet OMZP::ssh
 zinit snippet OMZP::sudo
