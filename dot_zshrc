@@ -32,13 +32,25 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
 # Add in snippets
+zinit snippet OMZP::adb
+zinit snippet OMZP::aliases
+zinit snippet OMZP::ansible
+# zinit snippet OMZP::asdf
+# zinit snippet OMZP::aws
+# zinit snippet OMZP::azure
+zinit snippet OMZP::colorize
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::cp
+zinit snippet OMZP::docker
+# zinit snippet OMZP::fzf  # Use this instead of my manual config, if problems with autocompletion arise
 zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit snippet OMZP::aws
+zinit snippet OMZP::helm
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
-zinit snippet OMZP::command-not-found
+zinit snippet OMZP::pip
+zinit snippet OMZP::ssh
+zinit snippet OMZP::sudo
+# zinit snippet OMZP::vi-mode
 
 # Kill Completions
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
