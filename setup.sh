@@ -1,6 +1,8 @@
 #!/bin/bash
 
 sudo mkdir -p /etc/apt/keyrings
+sudo apt-get update
+sudo apt-get install gnupg2 -y
 
 # Wezterm
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
@@ -8,7 +10,7 @@ echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/w
 
 # Helm
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-sudo apt install apt-transport-https --yes
+sudo apt-get install apt-transport-https --yes
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 
 # eza
@@ -23,7 +25,7 @@ sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged
 # k9s
 curl -sS https://webi.sh/k9s | sh
 
-sudo apt update
+sudo apt-get update
 
 for i in git zsh wezterm helm kubectl eza bat; do
   sudo apt-get install $i -y
