@@ -2,7 +2,7 @@
 
 sudo mkdir -p /etc/apt/keyrings
 sudo apt-get update
-sudo apt-get install gnupg2 -y
+sudo apt-get install gnupg2 wget -y
 
 # GUI Applications
 if command -v qdbus &> /dev/null
