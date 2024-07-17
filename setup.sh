@@ -34,7 +34,7 @@ curl -sS https://webi.sh/k9s | sh
 
 sudo apt-get update
 
-for i in wget git zsh helm kubectl eza bat htop; do
+for i in unzip wget git zsh helm kubectl eza bat htop; do
   sudo apt-get install $i -y
 done
 
