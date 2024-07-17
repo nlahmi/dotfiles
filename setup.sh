@@ -4,9 +4,16 @@ sudo mkdir -p /etc/apt/keyrings
 sudo apt-get update
 sudo apt-get install gnupg2 -y
 
-# Wezterm
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+# GUI Applications
+if command -v qdbus &> /dev/null
+then
+  # Wezterm
+  curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+  echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+
+  sudo apt-get update
+  sudo apt-get install wezterm -y
+fi
 
 # Helm
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
@@ -27,7 +34,7 @@ curl -sS https://webi.sh/k9s | sh
 
 sudo apt-get update
 
-for i in git zsh wezterm helm kubectl eza bat; do
+for i in wget git zsh helm kubectl eza bat htop; do
   sudo apt-get install $i -y
 done
 
