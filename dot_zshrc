@@ -36,16 +36,16 @@ zinit light zsh-users/zsh-autosuggestions
 zinit snippet OMZP::aliases
 zinit snippet OMZP::ansible
 # zinit snippet OMZP::asdf
-# zinit snippet OMZP::aws
-# zinit snippet OMZP::azure
+zinit snippet OMZP::aws
+zinit snippet OMZP::azure
 zinit snippet OMZP::colorize
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::cp
-# zinit snippet OMZP::docker     # Throws an error
+zinit snippet OMZP::docker     # Throws an error
 # zinit snippet OMZP::fzf      # Use this instead of my manual config, if problems with autocompletion arise
 zinit snippet OMZP::git
 # zinit snippet OMZP::helm     # Throws an error
-# zinit snippet OMZP::kubectl  # Completions don't work
+zinit snippet OMZP::kubectl  # Completions don't work
 # zinit snippet OMZP::kubectx  # Not sure I need it
 zinit snippet OMZP::pip
 zinit snippet OMZP::ssh
