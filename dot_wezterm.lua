@@ -61,6 +61,14 @@ wezterm.on("gui-startup", function()
 	window:gui_window():maximize()
 end)
 
+-- WSL
+local wsl_domains = wezterm.default_wsl_domains()
+for idx, dom in ipairs(wsl_domains) do
+  if dom.name == "WSL:Debian" then
+	config.default_domain = "WSL:Debian"
+  end
+end
+
 ---- End Custom Config ----
 
 -- and finally, return the configuration to wezterm

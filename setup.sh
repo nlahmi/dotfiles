@@ -2,17 +2,33 @@
 
 sudo mkdir -p /etc/apt/keyrings
 sudo apt-get update
-sudo apt-get install gnupg2 wget -y
+sudo apt-get install curl gnupg2 wget -y
 
-# GUI Applications
-if command -v qdbus &> /dev/null
-then
+# Running on WSL
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+
+  # Wslu (mainly for clipboard support but does more)
+  sudo apt install gnupg2 apt-transport-https
+  wget -O - https://pkg.wslutiliti.es/public.key | sudo gpg -o /usr/share/keyrings/wslu-archive-keyring.pgp --dearmor
+  echo "deb [signed-by=/usr/share/keyrings/wslu-archive-keyring.pgp] https://pkg.wslutiliti.es/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") main" | sudo tee /etc/apt/sources.list.d/wslu.list
+
+  # Git Credentials Manager integration
+  gcm=$(printf "%q" "$(realpath "$(dirname "$(which git.exe)")/../mingw64/bin/git-credential-manager.exe")")
+  git config --global credential.helper $gcm
+  
+  #sudo apt update
+  #sudo apt install wslu
+  
+# Not running on WSL
+else
+
   # Wezterm
   curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
   echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 
-  sudo apt-get update
-  sudo apt-get install wezterm -y
+  #sudo apt-get update
+  #sudo apt-get install wezterm -y
 fi
 
 # Helm
@@ -32,9 +48,9 @@ sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged
 # k9s
 curl -sS https://webi.sh/k9s | sh
 
+# Install stuff, ignoring those that failed or don't exist in our repos
 sudo apt-get update
-
-for i in unzip wget git zsh helm kubectl eza bat htop; do
+for i in unzip wget git zsh helm kubectl eza bat htop wslu wezterm; do
   sudo apt-get install $i -y
 done
 
@@ -58,6 +74,13 @@ curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/lates
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit /usr/local/bin
 rm lazygit.tar.gz
+
+# Install yazi
+YAZI_FILENAME="yazi-x86_64-unknown-linux-gnu"
+wget https://github.com/sxyazi/yazi/releases/download/v0.2.5/${YAZI_FILENAME}.zip
+unzip ${YAZI_FILENAME}.zip  # ${YAZI_FILENAME}/ya ${YAZI_FILENAME}/yazi
+sudo install ${YAZI_FILENAME}/ya ${YAZI_FILENAME}/yazi /usr/local/bin
+rm -rf ${YAZI_FILENAME} ${YAZI_FILENAME}.zip
 
 # Set zsh as the defualt shell for the current user
 sudo chsh $USER -s /bin/zsh
