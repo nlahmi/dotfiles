@@ -4,7 +4,7 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # Install packages
-choco install -y chezmoi wezterm git sudo zoxide
+choco install -y chezmoi wezterm git sudo zoxide starship
 
 # Apply Chezmoi
 chezmoi init --apply nlahmi
