@@ -1,5 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# [$shell](bg:color_orange fg:color_fg0)\
 format = """
 [](color_orange)\
 $os\
@@ -53,6 +54,15 @@ color_orange = '#e78a4e'
 color_purple = '#d3869b'
 color_red = '#ea6962'
 color_yellow = '#d8a657'
+
+[shell]
+disabled = false
+style = "bg:color_orange fg:color_fg0"
+
+fish_indicator = "󰈺 "
+# powershell_indicator = " _"
+powershell_indicator = ""
+cmd_indicator = ""
 
 [os]
 disabled = false
