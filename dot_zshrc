@@ -4,6 +4,11 @@
 ## Path
 export PATH=$PATH:"/home/$USER/.local/bin/"
 
+# Pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 
 ## Env Vars
 export EDITOR="nvim"
@@ -51,6 +56,9 @@ zinit snippet OMZP::pip
 zinit snippet OMZP::ssh
 zinit snippet OMZP::sudo
 # zinit snippet OMZP::vi-mode
+
+# Fix docker completions folder not existing
+mkdir -p "$ZSH_CACHE_DIR/completions"
 
 # Load completions
 autoload -Uz compinit && compinit
