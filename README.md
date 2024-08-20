@@ -7,6 +7,7 @@ sh -c "$(curl -fsLS https://raw.githubusercontent.com/nlahmi/dotfiles/main/setup
 
 ## Windows
 Will install a Debian WSL2 environment and run the Linux script inside it.
+Run as Administrator!
 ```
 iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/nlahmi/nvim-config/main/setup.ps1"))
 ```
