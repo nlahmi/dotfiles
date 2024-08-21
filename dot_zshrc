@@ -50,7 +50,7 @@ zinit snippet OMZP::docker     # Throws an error
 # zinit snippet OMZP::fzf      # Use this instead of my manual config, if problems with autocompletion arise
 zinit snippet OMZP::git
 # zinit snippet OMZP::helm     # Throws an error
-zinit snippet OMZP::kubectl  # Completions don't work
+# zinit snippet OMZP::kubectl  # Completions don't work
 # zinit snippet OMZP::kubectx  # Not sure I need it
 zinit snippet OMZP::pip
 zinit snippet OMZP::ssh
@@ -63,6 +63,9 @@ mkdir -p "$ZSH_CACHE_DIR/completions"
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
+
+# Kubectl autocomplete
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 
 ## History
