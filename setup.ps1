@@ -9,6 +9,11 @@ choco install -y chezmoi wezterm git sudo zoxide starship clink-maintained
 # Apply Chezmoi
 chezmoi init --apply nlahmi
 
+# Install Neovim
+git clone https://github.com/nlahmi/nvim-config $env:LOCALAPPDATA\nvim
+cd $env:LOCALAPPDATA\nvim
+.\setup.ps1
+
 # Install Debian on wsl2
 wsl --update
 wsl --set-default-version 2
