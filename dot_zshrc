@@ -60,13 +60,13 @@ zinit snippet OMZP::sudo
 # Fix docker completions folder not existing
 mkdir -p "$ZSH_CACHE_DIR/completions"
 
+
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
 # Kubectl autocomplete
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-
 
 ## History
 HISTSIZE=5000
@@ -165,3 +165,6 @@ eval "$(starship init zsh)"
 # zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 # zstyle ':completion:*' use-compctl false
 # zstyle ':completion:*' verbose true
+
+# add Pulumi to the PATH
+export PATH=$PATH:/home/noam/.pulumi/bin
