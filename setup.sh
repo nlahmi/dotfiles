@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p ~/.local/bin
 sudo mkdir -p /etc/apt/keyrings
 sudo apt-get update
 sudo apt-get install curl gnupg2 wget -y
@@ -26,6 +27,27 @@ else
   # Wezterm
   curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
   echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+
+  ## Kanata
+  # Add user to the correct groups
+  sudo groupadd uinput
+  sudo usermod -aG input $USER
+  sudo usermod -aG uinput $USER
+  newgrp input
+  newgrp uinput
+  # Give the uint group the right permissions
+  sudo tee /etc/udev/rules.d/99-input.rules <<EOF 
+  KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+  EOF
+  sudo udevadm control --reload-rules && sudo udevadm trigger
+  # May not be required
+  sudo modprobe uinput
+  # Download Kanata
+  wget -O $HOME/.local/bin/kanata https://github.com/jtroo/kanata/releases/download/v1.7.0/kanata
+  chmod +x $HOME/.local/bin/kanata
+  # Install as a systemd service
+  systemctl --user daemon-reload
+  systemctl --user enable --now kanata.service
 
   #sudo apt-get update
   #sudo apt-get install wezterm -y
@@ -58,7 +80,6 @@ for i in unzip wget git zsh helm kubectl eza bat htop wslu wezterm; do
 done
 
 # Create `bat` to `batcat` symlink (needed bc name clash with another package)
-mkdir -p ~/.local/bin
 ln -s /usr/bin/batcat ~/.local/bin/bat
 
 # Install starship

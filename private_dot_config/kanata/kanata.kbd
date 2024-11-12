@@ -1,0 +1,57 @@
+;; global configuration options
+(defcfg
+      process-unmapped-keys no
+      log-layer-changes yes
+)
+
+;; define keys that will be modified (all keys still processed)
+(defsrc
+      esc
+      caps
+      q w e
+      a s d f g h j k l scln
+      lalt spc ralt
+)
+
+;; default/base layer modifications always active
+(deflayer default
+      _
+      @cap
+      _ _ _
+      _ _ _ _ _ _ _ _ _ _
+      _ _ _
+)
+
+;; shifted layer activated by holding CAPS lock
+(deflayer cap-mod
+      _
+      _
+      @mmut @mvup @micm
+      @mprv @mvdn @mnxt _ _ left down up rght _
+      _     @mtog _
+)
+
+;; values used by multiple changes
+(defvar
+      double-tap-time 200
+      tap-time 200
+      hold-time 250
+)
+
+(deflocalkeys-linux
+      micmute 248
+)
+
+
+;; remapping between physical keys and functionality
+(defalias
+      capsword (tap-dance $double-tap-time (XX caps))
+      cap (tap-hold-press $tap-time $hold-time @capsword (layer-toggle cap-mod))
+      micm micmute
+      mmut mute   ;; 🔇
+      mtog pp     ;; ▶⏸
+      mnxt next   ;; ▶▶
+      mprv prev   ;; ◀◀
+      mvup volu   ;; 🔊
+      mvdn voldwn ;; 🔉
+)
