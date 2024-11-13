@@ -96,6 +96,7 @@ alias ls='eza --git --group -a'
 alias ll='ls -la'
 alias vim='nvim'
 alias c='clear'
+alias tmux='tmux -u'
 
 
 ## Shell integrations
