@@ -10,7 +10,7 @@ k9s:
     - devops
     # - logging
     - media
-    - nextcloud
+    # - nextcloud
   view:
     active: pod
   featureGates:

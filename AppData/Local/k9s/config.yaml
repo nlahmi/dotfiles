@@ -1,6 +1,6 @@
 k9s:
   liveViewAutoRefresh: false
-  screenDumpDir: C:\Users\Noam.L\AppData\Local\k9s\screen-dumps
+  # screenDumpDir: C:\Users\Noam.L\AppData\Local\k9s\screen-dumps
   refreshRate: 2
   maxConnRetry: 5
   readOnly: false
