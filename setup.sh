@@ -73,6 +73,9 @@ curl -sS https://webi.sh/k9s | sh
 # Pyenv
 curl https://pyenv.run | bash
 
+# UV (pip, venv, pyenv replacement)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
 # Install stuff, ignoring those that failed or don't exist in our repos
 sudo apt-get update
 for i in unzip wget git zsh helm kubectl eza bat htop wslu wezterm; do
