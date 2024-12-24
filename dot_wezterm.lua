@@ -69,6 +69,9 @@ for idx, dom in ipairs(wsl_domains) do
   end
 end
 
+-- Disable missing glyphs warning (pops up when using nvim's folding)
+config.warn_about_missing_glyphs = false
+
 ---- End Custom Config ----
 
 -- and finally, return the configuration to wezterm
