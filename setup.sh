@@ -18,8 +18,8 @@ if [[ -n "$WSL_DISTRO_NAME" ]]; then
   gcm=$(printf "%q" "$(realpath "$(dirname "$(which git.exe)")/../mingw64/bin/git-credential-manager.exe")")
   git config --global credential.helper $gcm
   
-  #sudo apt update
-  #sudo apt install wslu
+  sudo apt update
+  sudo apt install wslu
   
 # Not running on WSL
 else
@@ -78,7 +78,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install stuff, ignoring those that failed or don't exist in our repos
 sudo apt-get update
-for i in unzip wget git zsh helm kubectl eza bat htop wslu wezterm; do
+for i in unzip wget git zsh helm kubectl eza bat htop wezterm; do
   sudo apt-get install $i -y
 done
 
