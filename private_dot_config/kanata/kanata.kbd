@@ -11,6 +11,7 @@
       q w e
       a s d f g h j k l scln
       lalt spc ralt
+      mbck mfwd
 )
 
 ;; default/base layer modifications always active
@@ -20,6 +21,7 @@
       _ _ _
       _ _ _ _ _ _ _ _ _ _
       _ _ _
+      bck fwd
 )
 
 ;; shifted layer activated by holding CAPS lock
@@ -29,6 +31,7 @@
       @mmut @mvup @micm
       @mprv @mvdn @mnxt _ _ left down up rght _
       _     @mtog _
+      _     _
 )
 
 ;; values used by multiple changes
@@ -54,4 +57,5 @@
       mprv prev   ;; ◀◀
       mvup volu   ;; 🔊
       mvdn voldwn ;; 🔉
+      ;;mbck mute
 )

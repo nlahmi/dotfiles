@@ -53,6 +53,22 @@ config.scrollback_lines = 5000
 -- Keymaps
 config.keys = {
 	{ key = "x", mods = "SHIFT|CTRL|ALT", action = act.CloseCurrentPane({ confirm = false }) },
+	{
+		key = "BrowserBack",
+		mods = "",
+		action = act.SendKey({
+			key = "o",
+			mods = "CTRL",
+		}),
+	},
+	{
+		key = "BrowserForward",
+		mods = "",
+		action = act.SendKey({
+			key = "i",
+			mods = "CTRL",
+		}),
+	},
 }
 
 -- Full screen on startup
@@ -64,9 +80,9 @@ end)
 -- WSL
 local wsl_domains = wezterm.default_wsl_domains()
 for idx, dom in ipairs(wsl_domains) do
-  if dom.name == "WSL:Debian" then
-	config.default_domain = "WSL:Debian"
-  end
+	if dom.name == "WSL:Debian" then
+		config.default_domain = "WSL:Debian"
+	end
 end
 
 -- Disable missing glyphs warning (pops up when using nvim's folding)
