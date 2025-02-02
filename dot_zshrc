@@ -60,7 +60,6 @@ zinit snippet OMZP::sudo
 # Fix docker completions folder not existing
 mkdir -p "$ZSH_CACHE_DIR/completions"
 
-
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
@@ -152,6 +151,10 @@ python_venv() {
 }
 autoload -U add-zsh-hook
 add-zsh-hook chpwd python_venv
+
+# Custom completions
+source "${XDG_DATA_HOME:-${HOME}}/.config/zsh_completions/pulumi"
+
 
 # Set up the prompt
 
