@@ -141,6 +141,8 @@ eval "$(starship init zsh)"
 
 
 ## Automations
+autoload -U add-zsh-hook
+
 # Automatically activate venvs
 python_venv() {
   MYVENV=./venv
@@ -149,12 +151,18 @@ python_venv() {
   # # when you cd into a folder that doesn't
   # [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
 }
-autoload -U add-zsh-hook
 add-zsh-hook chpwd python_venv
 
 # Custom completions
 source "${XDG_DATA_HOME:-${HOME}}/.config/zsh_completions/pulumi"
 
+# Automatically export .env files
+dot_env() {
+  DOTFILE=.env
+  # when you cd into a folder that contains ".env" file
+  [[ -f $DOTFILE ]] && export $(grep -v '^#' $DOTFILE | xargs)
+}
+add-zsh-hook chpwd dot_env
 
 # Set up the prompt
 
