@@ -36,9 +36,7 @@ else
   newgrp input
   newgrp uinput
   # Give the uint group the right permissions
-  sudo tee /etc/udev/rules.d/99-input.rules <<EOF 
-  KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
-  EOF
+  sudo echo 'KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"' > /etc/udev/rules.d/99-input.rules
   sudo udevadm control --reload-rules && sudo udevadm trigger
   # May not be required
   sudo modprobe uinput
