@@ -66,13 +66,17 @@ curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --
 sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
 
 # k9s
-curl -sS https://webi.sh/k9s | sh
+# curl -sS https://webi.sh/k9s | sh
 
 # Pyenv
 curl https://pyenv.run | bash
+sudo apt update
+sudo apt install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+pyenv install 3.13
+pyenv global 3.13
 
 # UV (pip, venv, pyenv replacement)
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install stuff, ignoring those that failed or don't exist in our repos
 sudo apt-get update
