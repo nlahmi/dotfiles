@@ -146,8 +146,13 @@ autoload -U add-zsh-hook
 # Automatically activate venvs
 python_venv() {
   MYVENV=./venv
-  # when you cd into a folder that contains $MYVENV
+  # When you cd into a folder that contains venv
+  [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1 && return 0
+
+  MYVENV=./.venv
+  # When you cd into a folder that contains .venv
   [[ -d $MYVENV ]] && source $MYVENV/bin/activate > /dev/null 2>&1
+
   # # when you cd into a folder that doesn't
   # [[ ! -d $MYVENV ]] && deactivate > /dev/null 2>&1
 }
