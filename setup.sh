@@ -51,6 +51,14 @@ else
   #sudo apt-get install wezterm -y
 fi
 
+## Git config
+# No need for 'git push --set-upstream origin <branch>'
+git config --global push.autoSetupRemote true
+# Recurse submodules
+git config --global submodule.recurse true
+# Default branch is main instead of master
+git config --global init.defaultbranch=main
+
 # Helm
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
 sudo apt-get install apt-transport-https --yes
