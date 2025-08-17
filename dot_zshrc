@@ -96,6 +96,8 @@ alias ll='ls -la'
 alias vim='nvim'
 alias c='clear'
 alias tmux='tmux -u'
+alias less='less -r'
+alias grep='grep --color=always'
 
 
 ## Shell integrations
