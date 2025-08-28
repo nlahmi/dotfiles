@@ -4,7 +4,14 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # Install packages
-choco install -y chezmoi wezterm git zoxide starship clink-maintained
+choco install -y chezmoi wezterm git zoxide starship clink-maintained busybox
+
+# Install busybox
+busybox.exe --install
+setx PATH "%PATH%;C:\ProgramData\chocolatey\lib\busybox\tools"
+
+# Install uv
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 # Apply Chezmoi
 chezmoi init --apply nlahmi
