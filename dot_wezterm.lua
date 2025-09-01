@@ -88,6 +88,14 @@ end
 -- Disable missing glyphs warning (pops up when using nvim's folding)
 config.warn_about_missing_glyphs = false
 
+-- Disable audi-bell (lol)
+config.audible_bell = "Disabled"
+config.visual_bell = {
+	fade_in_duration_ms = 100,
+	fade_out_duration_ms = 100,
+	target = "CursorColor",
+}
+
 ---- End Custom Config ----
 
 -- and finally, return the configuration to wezterm
