@@ -98,6 +98,7 @@ alias c='clear'
 alias tmux='tmux -u'
 alias less='less -r'
 alias grep='grep --color=always'
+alias rand="curl 'https://www.random.org/integers/?num=1&min=0&max=1&col=1&base=10&format=plain&rnd=new'"
 
 
 ## Shell integrations
