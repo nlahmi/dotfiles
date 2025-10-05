@@ -206,5 +206,10 @@ export AWS_REGION=us-east-1
 export CLAUDE_CODE_USE_BEDROCK=1
 # export ANTHROPIC_MODEL='us.anthropic.claude-opus-4-1-20250805-v1:0'
 
+# Fix for ansible
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
 # add Pulumi to the PATH
 export PATH=$PATH:/home/noam/.pulumi/bin
