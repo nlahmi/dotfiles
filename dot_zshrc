@@ -67,6 +67,9 @@ zinit cdreplay -q
 # Kubectl autocomplete
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
+# UV Autocompletion
+echo 'eval "$(uv generate-shell-completion zsh)"' >> ~/.zshrc
+
 ## History
 HISTSIZE=5000
 SAVEHIST=$HISTSIZE
