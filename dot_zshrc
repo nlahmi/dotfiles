@@ -6,13 +6,15 @@ export PATH=$PATH:"/home/$USER/.local/bin/"
 
 # Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+type -p pyenv &>/dev/null && eval "$(pyenv init -)"
+type -p pyenv &>/dev/null && eval "$(pyenv virtualenv-init -)"
 
+## Brew
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+type -p brew &>/dev/null && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 ## Env Vars
 export EDITOR="nvim"
-
 
 ## Zinit
 # Set the directory we want to store zinit and plugins
