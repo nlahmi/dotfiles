@@ -71,7 +71,11 @@ sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.lis
 
 # Kubectl
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
+sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+# Powershell
+curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/debian/13/prod trixie main" | sudo tee /etc/apt/sources.list.d/microsoft.list
 
 # k9s
 # curl -sS https://webi.sh/k9s | sh
@@ -88,7 +92,7 @@ pyenv global 3.13
 
 # Install stuff, ignoring those that failed or don't exist in our repos
 sudo apt-get update
-for i in unzip wget git zsh helm kubectl eza bat htop wezterm; do
+for i in unzip wget git zsh helm kubectl eza bat htop wezterm powershell; do
   sudo apt-get install $i -y
 done
 
