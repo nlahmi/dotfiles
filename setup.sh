@@ -123,6 +123,9 @@ unzip ${YAZI_FILENAME}.zip  # ${YAZI_FILENAME}/ya ${YAZI_FILENAME}/yazi
 sudo install ${YAZI_FILENAME}/ya ${YAZI_FILENAME}/yazi /usr/local/bin
 rm -rf ${YAZI_FILENAME} ${YAZI_FILENAME}.zip
 
+# Install devpod
+curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-linux-amd64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
+
 # Set zsh as the defualt shell for the current user
 sudo chsh $USER -s /bin/zsh
 

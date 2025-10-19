@@ -69,6 +69,9 @@ zinit cdreplay -q
 # Kubectl autocomplete
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
+# Devpod autocomplete
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
 # UV Autocompletion
 type -p uv &>/dev/null && eval "$(uv generate-shell-completion zsh)"
 
