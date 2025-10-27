@@ -78,6 +78,12 @@ type -p uv &>/dev/null && eval "$(uv generate-shell-completion zsh)"
 # ACLI Completion
 type -p acli &>/dev/null && eval "$(_ACLI_COMPLETE=source_zsh acli)"
 
+# Add Armis to path
+export PATH="$HOME/armis/bin:$PATH"
+
+# # Bazel Completion
+# type -p bazel &>/dev/null && autoload bashcompinit; bashcompinit  #; eval "$(bazel help completion bash)"
+
 ## History
 HISTSIZE=5000
 SAVEHIST=$HISTSIZE
