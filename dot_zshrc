@@ -59,6 +59,7 @@ zinit snippet OMZP::git
 # zinit snippet OMZP::kubectx  # Not sure I need it
 zinit snippet OMZP::pip
 zinit snippet OMZP::ssh
+zinit snippet OMZP::ssh-agent
 zinit snippet OMZP::sudo
 # zinit snippet OMZP::vi-mode
 
