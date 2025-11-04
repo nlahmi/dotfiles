@@ -253,16 +253,20 @@ preexec() {
     title="$src_exe"
   fi
 
-  type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
-  type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
+  if [[ -n title ]]; then
+    type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
+    type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
+  fi
 }
 
 # Hook command finished
 precmd() {
   title="${PWD##*/}"
 
-  type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
-  type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
+  if [[ -n title ]]; then
+    type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
+    type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
+  fi
 }
 
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
