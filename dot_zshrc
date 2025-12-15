@@ -5,11 +5,19 @@ fi
 # Huge inspiration from: https://www.youtube.com/watch?v=ud7YxC33Z3w
 
 ## Path
-export PATH=$PATH:"/home/$USER/.local/bin/"
+export PATH="$PATH:/home/$USER/.local/bin/"
 
 ## Brew
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-type -p brew &>/dev/null && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
+# type -p brew &>/dev/null && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# The following is 'brew shellenv' but adding to the end of PATH
+export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
+export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
+fpath[1,0]="/home/linuxbrew/.linuxbrew/share/zsh/site-functions";
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin";
+[ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
+export INFOPATH="${INFOPATH:-}:/home/linuxbrew/.linuxbrew/share/info";
 
 # Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
