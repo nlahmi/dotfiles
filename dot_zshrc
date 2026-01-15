@@ -102,7 +102,7 @@ export PATH="$HOME/armis/bin:$PATH"
 # type -p bazel &>/dev/null && autoload bashcompinit; bashcompinit  #; eval "$(bazel help completion bash)"
 
 ## History
-HISTSIZE=5000
+HISTSIZE=50000
 SAVEHIST=$HISTSIZE
 HISTFILE=~/.zsh_history
 HISTDUP=erase
