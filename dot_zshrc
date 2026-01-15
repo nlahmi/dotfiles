@@ -248,39 +248,46 @@ export LANGUAGE=en_US.UTF-8
 # add Pulumi to the PATH
 export PATH=$PATH:/home/noam/.pulumi/bin
 
-# # Hook command execution
-# preexec() {
-#   # Get the command line and split only the program/executable
-#   src=$1
-#   src_exe="${src%% *}"
-#
-#   # List of programs to add path with
-#   exes_w_path=("nvim" "python" "test")
-#   exes_to_ignore=("cd")
-#
-#   # Add path if needed
-#   if [[ ${exes_w_path[(ie)$src_exe]} -le ${#exes_w_path} ]]; then
-#     title="$src_exe: ${PWD##*/}"
-#   elif [[ ${exes_to_ignore[(ie)$src_exe]} -le ${#exes_to_ignore} ]]; then
-#   else
-#     title="$src_exe"
-#   fi
-#
-#   if [[ -n title ]]; then
-#     type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
-#     type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
-#   fi
-# }
-#
-# # Hook command finished
-# precmd() {
-#   title="${PWD##*/}"
-#
-#   if [[ -n title ]]; then
-#     type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
-#     type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
-#   fi
-# }
+function set-title() {
+  echo -ne "\033]2;$*\\007"
+}
+
+# Hook command execution
+preexec() {
+  # Remove leading whitespace
+  src=`echo $1 | xargs`
+  # Split only the program/executable
+  src_exe="${src%% *}"
+
+  # List of programs to add path with
+  exes_w_path=("nvim" "python" "claude")
+  exes_to_ignore=("cd")
+
+  # Add path if needed
+  if [[ ${exes_w_path[(ie)$src_exe]} -le ${#exes_w_path} ]]; then
+    title="$src_exe: ${PWD##*/}"
+  elif [[ ${exes_to_ignore[(ie)$src_exe]} -le ${#exes_to_ignore} ]]; then
+  else
+    title="$src_exe"
+  fi
+
+  if [[ -n title ]]; then
+    set-title $title
+    # type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
+    # type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
+  fi
+}
+
+# Hook command finished
+precmd() {
+  title="${PWD##*/}"
+
+  if [[ -n title ]]; then
+    set-title $title
+    # type -p wezterm.exe &>/dev/null && wezterm.exe cli set-tab-title $title
+    # type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
+  fi
+}
 
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
     zprof
