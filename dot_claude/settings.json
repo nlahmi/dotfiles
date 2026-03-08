@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "defaultMode": "plan"
+  },
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/noam/.claude/hooks/permission-notify.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "sonnet"
+}
