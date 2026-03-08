@@ -3,6 +3,17 @@
     "defaultMode": "plan"
   },
   "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/stop-notify.sh"
+          }
+        ]
+      }
+    ],
     "PermissionRequest": [
       {
         "matcher": "",
