@@ -9,7 +9,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/noam/.claude/hooks/permission-notify.sh"
+            "command": "~/.claude/hooks/permission-notify.sh"
           }
         ]
       }
