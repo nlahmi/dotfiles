@@ -2,6 +2,7 @@
   "permissions": {
     "defaultMode": "plan"
   },
+  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -30,5 +31,15 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
-  "model": "sonnet"
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "caveman@caveman": true
+  }
 }
