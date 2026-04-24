@@ -27,9 +27,10 @@
       }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+  "enabledPlugins": {
+    "playground@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "github@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -39,7 +40,5 @@
       }
     }
   },
-  "enabledPlugins": {
-    "caveman@caveman": true
-  }
+  "agentPushNotifEnabled": true
 }
