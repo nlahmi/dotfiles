@@ -29,16 +29,7 @@
   },
   "enabledPlugins": {
     "playground@claude-plugins-official": true,
-    "caveman@caveman": true,
-    "github@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
-      }
-    }
-  },
-  "agentPushNotifEnabled": true
+    "github@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  }
 }
