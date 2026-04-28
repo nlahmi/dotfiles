@@ -290,8 +290,9 @@ precmd() {
 
 # Zoxide (cd replacement)
 # Only initialize in interactive shells to avoid issues with Claude Code
-[[ $- == *i* ]] && eval "$(zoxide init --cmd cd zsh)"
-# eval "$(zoxide init --cmd cd zsh)"
+if [[ "$CLAUDECODE" != "1" ]]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
     zprof
