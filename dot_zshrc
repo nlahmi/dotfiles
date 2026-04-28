@@ -170,9 +170,6 @@ zstyle ':fzf-tab:complete:*:*' fzf-preview 'zsh -c "if [ -e $realpath -a -d $rea
 # zstyle ':fzf-tab:complete:cat:*' fzf-preview 'bat --color=always --style=header,grid --line-range :300 $realpath'
 # zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath -a'
 
-# Zoxide
-eval "$(zoxide init --cmd cd zsh)"
-
 
 # Prompt (Starship)
 eval "$(starship init zsh)"
@@ -290,6 +287,11 @@ precmd() {
     # type -p wezterm &>/dev/null && wezterm cli set-tab-title $title
   fi
 }
+
+# Zoxide (cd replacement)
+# Only initialize in interactive shells to avoid issues with Claude Code
+[[ $- == *i* ]] && eval "$(zoxide init --cmd cd zsh)"
+# eval "$(zoxide init --cmd cd zsh)"
 
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
     zprof
