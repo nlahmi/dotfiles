@@ -42,7 +42,11 @@
 )
 
 (deflocalkeys-linux
-      micmute 248
+      micmute 1 ;;248
+)
+
+(deflocalkeys-winiov2
+      micmute 1
 )
 
 
