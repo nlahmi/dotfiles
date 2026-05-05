@@ -204,6 +204,18 @@ dot_env() {
 }
 add-zsh-hook chpwd dot_env
 
+# Support new tabs at the same path in WSL
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  __vte_osc7() {
+    # Send the escape sequence to WezTerm
+    printf "\033]7;file://%s%s\a" "${HOSTNAME}" "${PWD}"
+  }
+  add-zsh-hook chpwd __vte_osc7
+  
+  # Run once on startup so the first tab knows where it is
+  __vte_osc7 
+fi
+
 # Set up the prompt
 
 # autoload -Uz promptinit
@@ -236,6 +248,20 @@ if [[ "$HOST" == "noam-la-hj54" ]]; then
   export CLAUDE_CODE_USE_BEDROCK=1
   # export DISABLE_PROMPT_CACHING=1
   export AWS_SDK_LOAD_CONFIG=1
+
+  ## Firefox in WSL fixes (GPU acceleration)
+  # WSLg GPU: route Mesa through D3D12 onto the NVIDIA dGPU.
+  # Without GALLIUM_DRIVER=d3d12 Mesa 25 falls back to llvmpipe.
+  export GALLIUM_DRIVER=d3d12
+  export MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA
+
+  # HW video decode via nvidia-vaapi-driver -> NVDEC (libnvcuvid).
+  # Mesa's d3d12 VA driver fails without /dev/dri on WSLg; nvidia-vaapi-driver
+  # talks to CUDA/NVDEC directly.
+  export LIBVA_DRIVER_NAME=nvidia
+  # Firefox needs these for VA-API to work in the RDD process:
+  export MOZ_DISABLE_RDD_SANDBOX=1
+  export MOZ_ENABLE_WAYLAND=0
 fi
 # export ANTHROPIC_MODEL='us.anthropic.claude-opus-4-1-20250805-v1:0'
 
