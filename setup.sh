@@ -92,7 +92,7 @@ pyenv global 3.13
 
 # Install stuff, ignoring those that failed or don't exist in our repos
 sudo apt-get update
-for i in unzip wget git zsh helm kubectl eza bat htop wezterm powershell; do
+for i in unzip wget git zsh tmux helm kubectl eza bat htop wezterm powershell; do
   sudo apt-get install $i -y
 done
 
@@ -137,3 +137,6 @@ ln -s ~/AppData/Local/k9s ~/.config/
 
 # Install Neovim
 sh -c "$(curl -fsLS https://raw.githubusercontent.com/nlahmi/nvim-config/main/setup-debian.sh)"
+
+# Install Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
