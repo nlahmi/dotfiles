@@ -34,11 +34,12 @@ docker run --rm -it \
   -v ~/.aws:/home/dev/.aws \
   -v ~/.kube:/home/dev/.kube \
   -v ~/.config/gh:/home/dev/.config/gh \
-  -v ~/.docker/config.json:/home/dev/.docker/config.json:ro \
   -v ~/.gitconfig:/home/dev/.gitconfig:ro \
   -v ~/.ssh:/home/dev/.ssh:ro \
   -v ~/.claude:/home/dev/.claude \
   -v ~/.claude.json:/home/dev/.claude.json \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --group-add "$(stat -c '%g' /var/run/docker.sock)" \
   ghcr.io/nlahmi/dev:latest
 ```
 On Android via proot-distro:

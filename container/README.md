@@ -1,8 +1,8 @@
 # Dev container
 
 Debian-based image with the full CLI toolset (zsh, tmux, git, neovim, ripgrep, fd, bat,
-eza, fzf, zoxide, starship, lazygit, node), Claude Code, and the dotfiles applied at build
-time. No desktop/systemd/kanata/wezterm bits.
+eza, fzf, zoxide, starship, lazygit, node, docker client), Claude Code, and the dotfiles
+applied at build time. No desktop/systemd/kanata/wezterm bits.
 
 ## Published image
 GitHub Actions builds `linux/amd64,linux/arm64` and pushes to GHCR on changes to
@@ -26,18 +26,20 @@ Ephemeral container with `~/Projects` mounted read-write (changes sync both ways
 
 To reuse host credentials (aws, kube, gh, git, ssh, Claude) mount them in. Keys and
 identity are read-only; the rest stay writable so tools can refresh tokens. The container
-user is uid 1000, matching the host, so ownership lines up:
+user is uid 1000, matching the host, so ownership lines up. The docker socket mount plus
+`--group-add` lets the bundled docker client drive the host daemon:
 
     docker run --rm -it \
       -v ~/Projects:/home/dev/Projects \
       -v ~/.aws:/home/dev/.aws \
       -v ~/.kube:/home/dev/.kube \
       -v ~/.config/gh:/home/dev/.config/gh \
-      -v ~/.docker/config.json:/home/dev/.docker/config.json:ro \
       -v ~/.gitconfig:/home/dev/.gitconfig:ro \
       -v ~/.ssh:/home/dev/.ssh:ro \
       -v ~/.claude:/home/dev/.claude \
       -v ~/.claude.json:/home/dev/.claude.json \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      --group-add "$(stat -c '%g' /var/run/docker.sock)" \
       ghcr.io/nlahmi/dev:latest
 
 ## Build locally

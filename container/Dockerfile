@@ -29,6 +29,18 @@ RUN set -e; \
     ln -s "/opt/nvim-linux-${NV_ARCH}/bin/nvim" /usr/local/bin/nvim; \
     rm -f /tmp/nvim.tar.gz
 
+# Docker CLI only (talks to the host daemon via a mounted /var/run/docker.sock)
+ARG DOCKER_VERSION=29.6.0
+RUN set -e; \
+    case "$TARGETARCH" in \
+      arm64) DK_ARCH=aarch64 ;; \
+      *)     DK_ARCH=x86_64 ;; \
+    esac; \
+    curl -fLo /tmp/docker.tgz "https://download.docker.com/linux/static/stable/${DK_ARCH}/docker-${DOCKER_VERSION}.tgz"; \
+    tar -C /tmp -xf /tmp/docker.tgz docker/docker; \
+    install /tmp/docker/docker /usr/local/bin/docker; \
+    rm -rf /tmp/docker /tmp/docker.tgz
+
 # Non-root user with passwordless sudo
 RUN useradd -m -s /usr/bin/zsh dev \
     && echo 'dev ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/dev
