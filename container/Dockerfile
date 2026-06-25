@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
       zsh tmux git curl wget unzip ca-certificates gnupg sudo locales \
       openssh-client build-essential \
-      ripgrep fd-find bat htop eza neovim nodejs npm \
+      ripgrep fd-find bat htop eza nodejs npm \
+      python3 python3-venv python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i 's/^# *en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen && locale-gen
@@ -15,6 +16,18 @@ ENV LANG=en_US.UTF-8
 # bat/fd are namespaced on Debian to avoid clashes
 RUN ln -s /usr/bin/batcat /usr/local/bin/bat \
     && ln -s /usr/bin/fdfind /usr/local/bin/fd
+
+# Neovim (matching the version used by nvim-config; tarball avoids FUSE/AppImage)
+ARG NVIM_VERSION=v0.11.5
+RUN set -e; \
+    case "$TARGETARCH" in \
+      arm64) NV_ARCH=arm64 ;; \
+      *)     NV_ARCH=x86_64 ;; \
+    esac; \
+    curl -fLo /tmp/nvim.tar.gz "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-${NV_ARCH}.tar.gz"; \
+    tar -C /opt -xf /tmp/nvim.tar.gz; \
+    ln -s "/opt/nvim-linux-${NV_ARCH}/bin/nvim" /usr/local/bin/nvim; \
+    rm -f /tmp/nvim.tar.gz
 
 # Non-root user with passwordless sudo
 RUN useradd -m -s /usr/bin/zsh dev \
@@ -51,5 +64,9 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # Bake in dotfiles
 RUN /home/dev/.local/bin/chezmoi init --apply nlahmi
+
+# Neovim config + plugins (headless Lazy install)
+RUN git clone --depth 1 https://github.com/nlahmi/nvim-config ~/.config/nvim \
+    && nvim --headless "+Lazy! install" +qa
 
 CMD ["zsh"]

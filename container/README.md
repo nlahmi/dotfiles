@@ -20,8 +20,9 @@ proot-distro 5.x pulls OCI images straight from a registry:
     proot-distro login dev
 
 ## Run on a desktop
+Ephemeral container with `~/Projects` mounted read-write (changes sync both ways):
 
-    docker run -it --rm ghcr.io/nlahmi/dev:latest
+    docker run --rm -it -v ~/Projects:/home/dev/Projects ghcr.io/nlahmi/dev:latest
 
 ## Build locally
 
