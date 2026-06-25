@@ -34,6 +34,7 @@ docker run --rm -it \
   -v ~/.aws:/home/dev/.aws \
   -v ~/.kube:/home/dev/.kube \
   -v ~/.config/gh:/home/dev/.config/gh \
+  -v ~/.docker/config.json:/home/dev/.docker/config.json:ro \
   -v ~/.gitconfig:/home/dev/.gitconfig:ro \
   -v ~/.ssh:/home/dev/.ssh:ro \
   -v ~/.claude:/home/dev/.claude \
