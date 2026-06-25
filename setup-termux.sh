@@ -22,8 +22,16 @@ pkg install -y \
   eza \
   htop
 
+# Terminal font (Hack Nerd Font Mono, matching the wezterm config).
+# Reuses the font committed in nvim-config. Termux reads its font from this exact path.
+mkdir -p ~/.termux
+curl -fLo ~/.termux/font.ttf https://raw.githubusercontent.com/nlahmi/nvim-config/main/fonts/Hack/HackNerdFontMono-Regular.ttf
+
 # Make zsh the login shell
 chsh -s zsh
 
 # Pull and apply dotfiles (chezmoi comes from pkg, no bootstrap needed)
 chezmoi init --apply nlahmi
+
+# Apply the new font/settings
+command -v termux-reload-settings >/dev/null && termux-reload-settings || true
