@@ -22,6 +22,11 @@ sh -c "$(curl -fsLS https://raw.githubusercontent.com/nlahmi/dotfiles/main/setup
 
 ## Dev container
 Full toolset incl. Claude Code, published to `ghcr.io/nlahmi/dev`. See [container/README.md](container/README.md).
+
+Ephemeral container with `~/Projects` mounted both ways:
+```
+docker run --rm -it -v ~/Projects:/home/dev/Projects ghcr.io/nlahmi/dev:latest
+```
 On Android via proot-distro:
 ```
 proot-distro install ghcr.io/nlahmi/dev:latest
