@@ -9,15 +9,15 @@ views:
       - NAMESPACE
       - READY
       - RESTARTS
-      - MEM/R
-      - MEM/L
+      - "%MEM/R"
+      - "%MEM/L"
       - NODE
       - AGE
       - PF
       - CPU
       - MEM
-      - CPU/R
-      - CPU/L
+      - "%CPU/R"
+      - "%CPU/L"
       # - IP
 
   # # Alters the service view column layout
