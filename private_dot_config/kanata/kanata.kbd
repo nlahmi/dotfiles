@@ -1,7 +1,20 @@
 ;; global configuration options
+;; Don't grab mice. They advertise a keyboard interface, so keyboard-only
+;; detection is not enough to filter them out and they have to be named.
+;; Grabbing them used to kill kanata with "failed read: No such device"
+;; every time a wireless mouse slept, powered off or re-paired.
 (defcfg
       process-unmapped-keys no
       log-layer-changes yes
+      linux-device-detect-mode keyboard-only
+      linux-continue-if-no-devs-found yes
+      linux-dev-names-exclude (
+            "Logitech MX Master 3"
+            "Logitech MX Master 2S"
+            "BY Tech Gaming Keyboard Mouse"
+            "Mouse passthrough"
+            "Mouse passthrough (absolute)"
+      )
 )
 
 ;; define keys that will be modified (all keys still processed)
@@ -11,7 +24,6 @@
       q w e
       a s d f g h j k l scln
       lalt spc ralt
-      mbck mfwd
 )
 
 ;; default/base layer modifications always active
@@ -21,8 +33,6 @@
       _ _ _
       _ _ _ _ _ _ _ _ _ _
       _ _ _
-      _ _
-;;      bck fwd
 )
 
 ;; shifted layer activated by holding CAPS lock
@@ -32,7 +42,6 @@
       @mmut @mvup @micm
       @mprv @mvdn @mnxt _ _ left down up rght _
       _     @mtog _
-      _     _
 )
 
 ;; values used by multiple changes

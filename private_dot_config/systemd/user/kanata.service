@@ -1,16 +1,19 @@
 [Unit]
 Description=Kanata keyboard remapper
 Documentation=https://github.com/jtroo/kanata
+StartLimitIntervalSec=0
 
 [Service]
 Environment=PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
 Environment=DISPLAY=:0
 Type=simple
 ExecStart=%h/.local/bin/kanata
-; ExecStart=/usr/bin/sh -c 'exec $$(which kanata)'
-; ExecStart=/usr/bin/sh -c 'exec $$(which kanata) --cfg $${HOME}/.config/kanata/kanata.kbd'
-; ExecStart=/usr/bin/sh -c 'exec $$(which kanata) --cfg $${HOME}/.config/kanata/config.kbd'
-; Restart=no
+
+; Always come back, no matter how it died. StartLimitIntervalSec=0 above
+; disables systemd's give-up-after-5-restarts rule, so a keyboard that is
+; unplugged for a while can never leave the service permanently dead.
+Restart=always
+RestartSec=2
 
 [Install]
 WantedBy=default.target
