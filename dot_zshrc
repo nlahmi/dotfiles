@@ -245,6 +245,8 @@ if [[ "$HOST" == "WAPe7kQzbR5bqCE" ]]; then
   export AWS_REGION=us-east-1
   export CLAUDE_CODE_USE_BEDROCK=1
   export AWS_SDK_LOAD_CONFIG=1
+  # pi ignores the default credential chain unless a profile is named
+  export AWS_PROFILE=default
 
   ## Firefox in WSL fixes (GPU acceleration)
   # WSLg GPU: route Mesa through D3D12 onto the NVIDIA dGPU.

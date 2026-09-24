@@ -140,3 +140,9 @@ sh -c "$(curl -fsLS https://raw.githubusercontent.com/nlahmi/nvim-config/main/se
 
 # Install Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
+
+# Install Node (via nvm) and pi. pi needs Node >= 22.19
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
+nvm install 24 && nvm alias default 24
+curl -fsSL https://pi.dev/install.sh | sh

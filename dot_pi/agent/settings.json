@@ -1,0 +1,26 @@
+{
+  "enableInstallTelemetry": false,
+  "showCacheMissNotices": true,
+  "doubleEscapeAction": "tree",
+  "tuiMode": "fullscreen",
+  "enabledModels": [
+    "anthropic/claude-opus-5-5",
+    "openai-codex/gpt-5.5",
+    "amazon-bedrock/us.anthropic.claude-opus-5-5",
+    "anthropic/claude-sonnet-5",
+    "amazon-bedrock/us.anthropic.claude-sonnet-5"
+  ],
+  "skills": ["~/.claude/skills"],
+  "packages": [
+    "npm:@czottmann/pi-automode",
+    "npm:pi-subagents",
+    "npm:pi-mcp-adapter",
+    "npm:@narumitw/pi-plan-mode",
+    "npm:@plannotator/pi-extension",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:pi-web-access",
+    "npm:pi-rewind-hook",
+    "npm:pi-powerline-footer"
+  ]
+}
