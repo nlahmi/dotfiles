@@ -88,7 +88,7 @@ zinit cdreplay -q
 type -p uv &>/dev/null && eval "$(uv generate-shell-completion zsh)"
 
 # ACLI Completion
-type -p acli &>/dev/null && eval "$(_ACLI_COMPLETE=source_zsh acli)"
+type -p acli &>/dev/null && eval "$(_ACLI_COMPLETE=zsh_source acli)"
 
 # NVM path and completion
 export NVM_DIR="$HOME/.nvm"
@@ -247,6 +247,9 @@ if [[ "$HOST" == "WAPe7kQzbR5bqCE" ]]; then
   export AWS_SDK_LOAD_CONFIG=1
   # pi ignores the default credential chain unless a profile is named
   export AWS_PROFILE=default
+
+  # For acli (needs UV)
+  export PATH="$HOME/.local/bin:$PATH"
 
   ## Firefox in WSL fixes (GPU acceleration)
   # WSLg GPU: route Mesa through D3D12 onto the NVIDIA dGPU.
