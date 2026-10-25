@@ -27,6 +27,7 @@ type -p pyenv &>/dev/null && eval "$(pyenv virtualenv-init -)"
 ## Env Vars
 export EDITOR="nvim"
 export PSQL_PAGER="less -X -F -R"
+export PGOPTIONS="-c default_transaction_read_only=on"
 
 ## Zinit
 # Set the directory we want to store zinit and plugins

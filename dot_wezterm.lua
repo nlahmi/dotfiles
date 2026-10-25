@@ -147,6 +147,16 @@ tab_state.default_on_pane_restore = on_pane_restore
 -- Esc starts fresh. The original menu is still there under "More options".
 local instance_manager = resurrect.instance_manager
 local show_multi_selector = instance_manager.show_instance_selector
+
+-- Newest save, skipping this window's own (the blank window we start in)
+local function find_last_instance()
+	for _, entry in ipairs(instance_manager.list_instances()) do
+		if entry.instance_id ~= instance_manager.instance_id then
+			return entry
+		end
+	end
+end
+
 instance_manager.show_instance_selector = function(window, pane, restore_opts, selected)
 	-- Alt+R's options captured the original restore function at setup time
 	restore_opts.on_pane_restore = on_pane_restore
@@ -154,14 +164,7 @@ instance_manager.show_instance_selector = function(window, pane, restore_opts, s
 	if selected then
 		return show_multi_selector(window, pane, restore_opts, selected)
 	end
-	-- Skip this window's own save, it's the blank window we just started in
-	local last
-	for _, entry in ipairs(instance_manager.list_instances()) do
-		if entry.instance_id ~= instance_manager.instance_id then
-			last = entry
-			break
-		end
-	end
+	local last = find_last_instance()
 	if not last then
 		return show_multi_selector(window, pane, restore_opts, selected)
 	end
@@ -177,15 +180,58 @@ instance_manager.show_instance_selector = function(window, pane, restore_opts, s
 			action = wezterm.action_callback(function(inner_win, inner_pane, id)
 				if id == "__MORE__" then
 					show_multi_selector(inner_win, inner_pane, restore_opts, {})
-				elseif id then
+				elseif id and restore_opts.reuse_window then
 					-- Not public API, but it's the only restore entry point that
 					-- also reuses the current window and tombstones the instance
 					instance_manager._test.restore_instances({ id }, inner_win, inner_pane, restore_opts)
+				elseif id then
+					-- Restoring into the current pane would type the restore
+					-- commands into whatever runs there (e.g. Claude), so open a
+					-- new window instead
+					local state = instance_manager.load_instance(id)
+					if state then
+						resurrect.workspace_state.restore_workspace(state, restore_opts)
+						instance_manager.tombstone_instance(id)
+					end
 				end
 			end),
 		}),
 		pane
 	)
+end
+
+-- The plugin opens the startup menu on a blind 1s timer and silently skips
+-- it if the window isn't up yet (e.g. a slow start after a big cleanup).
+-- Poll for the window instead, and log so a missing menu is diagnosable.
+instance_manager.auto_restore_on_startup = function()
+	instance_manager.cleanup_old_instances()
+	local _, _, window = mux.spawn_window({})
+	if not find_last_instance() then
+		return
+	end
+	local function show(attempts_left)
+		local gui_win = window:gui_window()
+		if gui_win then
+			wezterm.log_info("resurrect: showing startup menu")
+			instance_manager.show_instance_selector(gui_win, gui_win:active_pane(), {
+				-- Only safe here, the startup window is a blank shell
+				reuse_window = true,
+				relative = true,
+				restore_text = true,
+				on_pane_restore = on_pane_restore,
+			})
+		elseif attempts_left > 0 then
+			wezterm.time.call_after(0.25, function()
+				show(attempts_left - 1)
+			end)
+		else
+			wezterm.log_error("resurrect: startup menu skipped, window never appeared")
+		end
+	end
+	-- Short head start, the window can exist before it accepts actions
+	wezterm.time.call_after(0.5, function()
+		show(40)
+	end)
 end
 
 -- Full screen on startup
