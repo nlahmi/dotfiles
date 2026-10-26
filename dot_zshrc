@@ -264,6 +264,9 @@ if [[ "$HOST" == "WAPe7kQzbR5bqCE" ]]; then
   # For acli (needs UV)
   export PATH="$HOME/.local/bin:$PATH"
 
+  # Trust Falcon CA in node
+  export NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/falcon-root-ca.crt
+
   ## Firefox in WSL fixes (GPU acceleration)
   # WSLg GPU: route Mesa through D3D12 onto the NVIDIA dGPU.
   # Without GALLIUM_DRIVER=d3d12 Mesa 25 falls back to llvmpipe.
