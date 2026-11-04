@@ -1,19 +1,6 @@
 {
-  "permissions": {
-    "defaultMode": "plan"
-  },
-  "model": "sonnet",
   "hooks": {
     "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/stop-notify.sh"
-          }
-        ]
-      },
       {
         "matcher": "",
         "hooks": [
@@ -24,17 +11,7 @@
         ]
       }
     ],
-    "PermissionRequest": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/permission-notify.sh"
-          }
-        ]
-      }
-    ],
+    "PermissionRequest": [],
     "SessionStart": [
       {
         "matcher": "",
