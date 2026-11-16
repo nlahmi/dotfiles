@@ -5,3 +5,4 @@ README.md
 container
 .github
 Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
+install-kanata.ps1

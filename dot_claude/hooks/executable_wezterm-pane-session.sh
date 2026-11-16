@@ -14,6 +14,14 @@ INPUT=$(cat)
 DIR="$USERPROFILE/.claude/pane-sessions"
 mkdir -p "$DIR"
 
+# Resume from the folder Claude was launched in, not the one it's in now.
+# After entering a worktree the payload's cwd is the worktree, and launching
+# there loads the worktree's .claude instead of the root's. CLAUDE_PROJECT_DIR
+# stays on the launch folder, and --resume from there still finds the session.
+if [ "$1" = save ] && [ -n "$CLAUDE_PROJECT_DIR" ]; then
+	INPUT=$(printf '%s' "$INPUT" | jq -c --arg d "$CLAUDE_PROJECT_DIR" '.cwd = $d' 2>/dev/null || printf '%s' "$INPUT")
+fi
+
 case "$1" in
 	save) printf '%s' "$INPUT" > "$DIR/$WEZTERM_PANE.json" ;;
 	clear) rm -f "$DIR/$WEZTERM_PANE.json" ;;

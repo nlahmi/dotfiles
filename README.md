@@ -12,6 +12,12 @@ Run as Administrator!
 iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/nlahmi/nvim-config/main/setup.ps1"))
 ```
 
+## Windows, kanata only
+Installs just kanata gui with this repo's keyboard config, set to start at login. No admin needed.
+```
+irm https://raw.githubusercontent.com/nlahmi/dotfiles/main/install-kanata.ps1 | iex
+```
+
 ## Termux (Android)
 Installs a thin core layer of CLI tools and applies the dotfiles. Heavy dev work runs
 inside the container (see `container/`).

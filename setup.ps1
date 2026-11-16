@@ -4,7 +4,7 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # Install packages
-choco install -y chezmoi wezterm git zoxide starship clink-maintained busybox
+choco install -y chezmoi wezterm git zoxide starship clink-maintained busybox autohotkey
 
 # Install busybox
 busybox.exe --install
@@ -26,11 +26,19 @@ Copy-Item "$kanataExtract\kanata_windows_tty_winIOv2_x64.exe" "C:\Program Files\
 Copy-Item "$kanataExtract\kanata_windows_gui_winIOv2_x64.exe" "C:\Program Files\Kanata\kanata_gui.exe"
 Remove-Item $kanataZip, $kanataExtract -Recurse -Force
 
-# Create startup shortcut for Kanata
+# Create startup shortcut for kanata gui (tray app running the keyboard remap config)
 $shell = New-Object -ComObject WScript.Shell
-$shortcut = $shell.CreateShortcut("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\kanata_gui.exe.lnk")
+$shortcut = $shell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\kanata_gui.lnk")
 $shortcut.TargetPath = "C:\Program Files\Kanata\kanata_gui.exe"
 $shortcut.Arguments = "-c `"$env:USERPROFILE\.config\kanata\kanata.kbd`""
+$shortcut.WorkingDirectory = "$env:USERPROFILE\.config\kanata"
+$shortcut.Save()
+
+# Create startup shortcut for chromescroll (scroll over the browser tab bar to switch tabs)
+$shortcut = $shell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\chromescroll.lnk")
+$shortcut.TargetPath = "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe"
+$shortcut.Arguments = "`"$env:USERPROFILE\.config\chromescroll\chromescroll.ahk`""
+$shortcut.WorkingDirectory = "$env:USERPROFILE\.config\chromescroll"
 $shortcut.Save()
 
 # Install Neovim
