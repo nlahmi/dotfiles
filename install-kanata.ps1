@@ -7,14 +7,18 @@
 # preference changes into the caller's shell.
 & {
     $ErrorActionPreference = 'Stop'
-    # The progress bar makes downloads crawl on Windows PowerShell 5.1
-    $ProgressPreference = 'SilentlyContinue'
     # Windows PowerShell 5.1 can default to TLS 1.0, which GitHub rejects
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
     $version    = 'v1.11.0'
-    $installDir = "$env:LOCALAPPDATA\Programs\Kanata"
-    $configDir  = "$env:USERPROFILE\.config\kanata"
+    # Ask Windows for the folders instead of reading $env:USERPROFILE etc.:
+    # with a non-ASCII username those env vars can hold 8.3 short paths
+    # (C:\Users\95FA~1) that PowerShell 5.1 cmdlets fail to resolve
+    $home_      = [Environment]::GetFolderPath('UserProfile')
+    $localData  = [Environment]::GetFolderPath('LocalApplicationData')
+    $startup    = [Environment]::GetFolderPath('Startup')
+    $installDir = "$localData\Programs\Kanata"
+    $configDir  = "$home_\.config\kanata"
     $configUrl  = 'https://raw.githubusercontent.com/nlahmi/dotfiles/main/private_dot_config/kanata/kanata.kbd'
     $exe        = "$installDir\kanata_gui.exe"
     $config     = "$configDir\kanata.kbd"
@@ -27,30 +31,33 @@
         Wait-Process -InputObject $running
     }
 
-    # Not $env:TEMP: with a non-ASCII username it's an 8.3 short path
-    # (C:\Users\95FA~1\...) that Remove-Item in PowerShell 5.1 can't resolve
-    $tmp = Join-Path $env:LOCALAPPDATA "Temp\kanata-$([guid]::NewGuid())"
-    New-Item -ItemType Directory -Force -Path $tmp, $installDir, $configDir | Out-Null
+    # File work goes through .NET, not cmdlets: cmdlets resolve paths via
+    # PowerShell's provider, which chokes on 8.3 short paths; .NET doesn't
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $web = New-Object Net.WebClient
+    $tmp = "$localData\Temp\kanata-$([guid]::NewGuid())"
+    foreach ($dir in $tmp, $installDir, $configDir) { [IO.Directory]::CreateDirectory($dir) | Out-Null }
     try {
-        # -UseBasicParsing avoids the IE-engine error on fresh 5.1 installs
-        Invoke-WebRequest -UseBasicParsing "https://github.com/jtroo/kanata/releases/download/$version/windows-binaries-x64.zip" -OutFile "$tmp\kanata.zip"
-        Expand-Archive "$tmp\kanata.zip" -DestinationPath $tmp -Force
+        $web.DownloadFile("https://github.com/jtroo/kanata/releases/download/$version/windows-binaries-x64.zip", "$tmp\kanata.zip")
+        [IO.Compression.ZipFile]::ExtractToDirectory("$tmp\kanata.zip", "$tmp\x")
         # winIOv2 is the hook-based build, so it needs no driver and no admin
-        Copy-Item "$tmp\kanata_windows_gui_winIOv2_x64.exe" $exe -Force
+        [IO.File]::Copy("$tmp\x\kanata_windows_gui_winIOv2_x64.exe", $exe, $true)
     } finally {
         # Cleanup must never throw: an error here would hide the real one
         try { [IO.Directory]::Delete($tmp, $true) } catch {}
     }
 
-    Invoke-WebRequest -UseBasicParsing $configUrl -OutFile $config
+    $web.DownloadFile($configUrl, $config)
 
     $shell = New-Object -ComObject WScript.Shell
-    $shortcut = $shell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\kanata_gui.lnk")
+    $shortcut = $shell.CreateShortcut("$startup\kanata_gui.lnk")
     $shortcut.TargetPath = $exe
     $shortcut.Arguments = $kanataArgs
     $shortcut.WorkingDirectory = $configDir
     $shortcut.Save()
 
-    Start-Process $exe -ArgumentList $kanataArgs -WorkingDirectory $configDir
+    $psi = New-Object Diagnostics.ProcessStartInfo $exe, $kanataArgs
+    $psi.WorkingDirectory = $configDir
+    [Diagnostics.Process]::Start($psi) | Out-Null
     Write-Host "kanata gui $version installed to $installDir, running now and at every login."
 }
