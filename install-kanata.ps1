@@ -27,7 +27,9 @@
         Wait-Process -InputObject $running
     }
 
-    $tmp = Join-Path $env:TEMP "kanata-$([guid]::NewGuid())"
+    # Not $env:TEMP: with a non-ASCII username it's an 8.3 short path
+    # (C:\Users\95FA~1\...) that Remove-Item in PowerShell 5.1 can't resolve
+    $tmp = Join-Path $env:LOCALAPPDATA "Temp\kanata-$([guid]::NewGuid())"
     New-Item -ItemType Directory -Force -Path $tmp, $installDir, $configDir | Out-Null
     try {
         # -UseBasicParsing avoids the IE-engine error on fresh 5.1 installs
@@ -36,7 +38,8 @@
         # winIOv2 is the hook-based build, so it needs no driver and no admin
         Copy-Item "$tmp\kanata_windows_gui_winIOv2_x64.exe" $exe -Force
     } finally {
-        Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+        # Cleanup must never throw: an error here would hide the real one
+        try { [IO.Directory]::Delete($tmp, $true) } catch {}
     }
 
     Invoke-WebRequest -UseBasicParsing $configUrl -OutFile $config

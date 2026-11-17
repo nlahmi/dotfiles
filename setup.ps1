@@ -17,8 +17,8 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 chezmoi init --apply nlahmi
 
 # Install Kanata
-$kanataZip = "$env:TEMP\kanata.zip"
-$kanataExtract = "$env:TEMP\kanata"
+$kanataZip = "$env:LOCALAPPDATA\Temp\kanata.zip"
+$kanataExtract = "$env:LOCALAPPDATA\Temp\kanata"
 Invoke-WebRequest -Uri "https://github.com/jtroo/kanata/releases/download/v1.11.0/windows-binaries-x64.zip" -OutFile $kanataZip
 Expand-Archive -Path $kanataZip -DestinationPath $kanataExtract -Force
 New-Item -ItemType Directory -Force -Path "C:\Program Files\Kanata"
